@@ -37,9 +37,9 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="tests|src" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="tests"/>
+						<entry excluding="unity" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="tests"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="tests/unity"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -49,9 +49,15 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="al.null.200307148" name="al"/>
 	</storageModule>
-	<storageModule moduleId="scannerConfiguration">
-		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.mingw.base.1455487547;cdt.managedbuild.toolchain.gnu.mingw.base.1455487547.816420149;cdt.managedbuild.tool.gnu.c.compiler.mingw.base.127678785;cdt.managedbuild.tool.gnu.c.compiler.input.2016499016">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.mingw.base.1455487547;cdt.managedbuild.toolchain.gnu.mingw.base.1455487547.816420149;cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base.1914635582;cdt.managedbuild.tool.gnu.cpp.compiler.input.1747998616">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+	</storageModule>
 </cproject>

@@ -26,7 +26,12 @@ file(GLOB al_srcs src/*.c)
 
 add_library(al ${al_srcs})
 
-if(BUILD_TESTS)
+if(CMAKE_BUILD_TYPE STREQUAL "debug")
+    option(ENABLE_TESTS "Build tests" ON)
+    option(ENABLE_VALGRIND_TESTS "Build tests with valgrind" ON)
+endif()
+
+if(ENABLE_TESTS)
     enable_testing()
     add_subdirectory(tests)
-endif(BUILD_TESTS)
+endif(ENABLE_TESTS)
