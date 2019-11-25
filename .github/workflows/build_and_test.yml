@@ -11,7 +11,12 @@ jobs:
     - name: valgrind-install
       run: sudo apt-get install -y valgrind
     - name: build
-      run: mkdir -p build && cd build && cmake .. && make && make test
+      run: mkdir -p build && cd build && export CFLAGS="-coverage";cmake .. && make && make test
+    - name: codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        name: codecov
   release:
     runs-on: ubuntu-latest
     steps:

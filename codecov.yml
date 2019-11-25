@@ -1,0 +1,29 @@
+yout: header, changes, diff
+  
+coverage:
+  precision: 2
+  round: nearest
+  
+  ignore:
+  - tests/.*
+
+  status:
+    project:
+      default:
+        target: auto
+        if_no_uploads: error
+
+    patch:
+      default:
+        if_no_uploads: error
+
+    changes: true
+
+  parsers:
+    gcov:
+      branch_detection:
+        macro: no
+        loop: no
+        conditional: yes
+        method: no
+
