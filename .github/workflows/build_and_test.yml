@@ -17,6 +17,7 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         name: codecov
+        yml: ./codecov.yml 
   release:
     runs-on: ubuntu-latest
     steps:
