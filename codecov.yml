@@ -1,4 +1,5 @@
-yout: header, changes, diff
+comment:
+  layout: header, changes, diff
   
 coverage:
   precision: 2
