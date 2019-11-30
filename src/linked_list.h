@@ -8,21 +8,21 @@ extern "C" {
 #endif
 
 struct al_ll_iterator;
-struct al_linkedlist;
+struct al_linked_list;
 typedef void* al_ll_data_ptr;
 typedef const void* al_ll_const_data_ptr;
 
-struct al_linkedlist* al_ll_new(uint32_t elem_size);
-void al_ll_destroy(struct al_linkedlist *llist);
-void al_ll_clear(struct al_linkedlist *llist);
-int al_ll_is_empty(const struct al_linkedlist *llist);
+struct al_linked_list* al_ll_new(uint32_t elem_size);
+void al_ll_destroy(struct al_linked_list *llist);
+void al_ll_clear(struct al_linked_list *llist);
+int al_ll_is_empty(const struct al_linked_list *llist);
 
-int al_ll_insert_front(struct al_linkedlist *llist, al_ll_const_data_ptr element);
-int al_ll_insert_back(struct al_linkedlist *llist, al_ll_const_data_ptr element);
+int al_ll_insert_front(struct al_linked_list *llist, al_ll_const_data_ptr element);
+int al_ll_insert_back(struct al_linked_list *llist, al_ll_const_data_ptr element);
 void al_ll_remove(struct al_ll_iterator *iter);
 
-struct al_ll_iterator* al_ll_get_next(struct al_linkedlist *llist, struct al_ll_iterator *iter);
-struct al_ll_iterator* al_ll_get_prev(struct al_linkedlist *llist, struct al_ll_iterator *iter);
+struct al_ll_iterator* al_ll_get_next(struct al_linked_list *llist, struct al_ll_iterator *iter);
+struct al_ll_iterator* al_ll_get_prev(struct al_linked_list *llist, struct al_ll_iterator *iter);
 
 #define al_ll_get_data(iter) ((al_ll_data_ptr)((void**)(iter) + 2))
 
