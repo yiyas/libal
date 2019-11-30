@@ -14,13 +14,13 @@ struct al_ll_iterator {
 	char data[0];
 };
 
-struct al_linkedlist {
+struct al_linked_list {
 	struct al_ll_iterator head;
 	uint32_t elem_size;
 };
 
-struct al_linkedlist* al_ll_new(uint32_t elem_size) {
-    struct al_linkedlist *llist;
+struct al_linked_list* al_ll_new(uint32_t elem_size) {
+    struct al_linked_list *llist;
 
     llist = calloc(1, sizeof(*llist));
     CHECK_NOMEM_RT(llist, NULL);
@@ -32,12 +32,12 @@ struct al_linkedlist* al_ll_new(uint32_t elem_size) {
 	return llist;
 }
 
-void al_ll_destroy(struct al_linkedlist *llist) {
+void al_ll_destroy(struct al_linked_list *llist) {
     al_ll_clear(llist);
     free(llist);
 }
 
-void al_ll_clear(struct al_linkedlist *llist) {
+void al_ll_clear(struct al_linked_list *llist) {
     if (!llist) {
         return;
     }
@@ -47,11 +47,11 @@ void al_ll_clear(struct al_linkedlist *llist) {
     }
 }
 
-int al_ll_is_empty(const struct al_linkedlist *llist) {
+int al_ll_is_empty(const struct al_linked_list *llist) {
 	return !llist || llist->head.next == llist->head.prev;
 }
 
-static int insert_after(struct al_linkedlist *llist, struct al_ll_iterator *iter, al_ll_const_data_ptr element) {
+static int insert_after(struct al_linked_list *llist, struct al_ll_iterator *iter, al_ll_const_data_ptr element) {
     struct al_ll_iterator *tmp;
 
     tmp = calloc(1, sizeof(*tmp) + llist->elem_size);
@@ -70,12 +70,12 @@ static int insert_after(struct al_linkedlist *llist, struct al_ll_iterator *iter
     return 0;
 }
 
-int al_ll_insert_front(struct al_linkedlist *llist, al_ll_const_data_ptr element) {
+int al_ll_insert_front(struct al_linked_list *llist, al_ll_const_data_ptr element) {
     CHECK_NULLARG_RT(llist, -1);
     return insert_after(llist, &llist->head, element);
 }
 
-int al_ll_insert_back(struct al_linkedlist *llist, al_ll_const_data_ptr element) {
+int al_ll_insert_back(struct al_linked_list *llist, al_ll_const_data_ptr element) {
     CHECK_NULLARG_RT(llist, -1);
     return insert_after(llist, llist->head.prev, element);
 }
@@ -89,7 +89,7 @@ void al_ll_remove(struct al_ll_iterator *iter) {
     free(iter);
 }
 
-struct al_ll_iterator* al_ll_get_next(struct al_linkedlist *llist, struct al_ll_iterator *iter) {
+struct al_ll_iterator* al_ll_get_next(struct al_linked_list *llist, struct al_ll_iterator *iter) {
     if (al_ll_is_empty(llist)) {
         return NULL;
     }
@@ -103,7 +103,7 @@ struct al_ll_iterator* al_ll_get_next(struct al_linkedlist *llist, struct al_ll_
     return iter->next == &llist->head ? NULL : iter;
 }
 
-struct al_ll_iterator* al_ll_get_prev(struct al_linkedlist *llist, struct al_ll_iterator *iter) {
+struct al_ll_iterator* al_ll_get_prev(struct al_linked_list *llist, struct al_ll_iterator *iter) {
     if (al_ll_is_empty(llist)) {
         return NULL;
     }
