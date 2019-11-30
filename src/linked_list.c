@@ -43,7 +43,7 @@ void al_ll_clear(struct al_linkedlist *llist) {
     }
 
     while (llist->head.next != &llist->head) {
-        al_ll_remove(llist, llist->head.next);
+        al_ll_remove(llist->head.next);
     }
 }
 
@@ -80,15 +80,13 @@ int al_ll_insert_back(struct al_linkedlist *llist, al_ll_const_data_ptr element)
     return insert_after(llist, llist->head.prev, element);
 }
 
-int al_ll_remove(struct al_linkedlist *llist, struct al_ll_iterator *iter) {
-    CHECK_NULLARG2_RT(llist, iter, -1);
-
+void al_ll_remove(struct al_ll_iterator *iter) {
+    if (!iter) {
+        return;
+    }
     iter->next->prev = iter->prev;
     iter->prev->next = iter->next;
-
     free(iter);
-
-    return 0;
 }
 
 struct al_ll_iterator* al_ll_get_next(struct al_linkedlist *llist, struct al_ll_iterator *iter) {
@@ -97,10 +95,12 @@ struct al_ll_iterator* al_ll_get_next(struct al_linkedlist *llist, struct al_ll_
     }
 
     if (!iter) {
-        iter = &llist->head;
+        iter = llist->head.next;
+    } else {
+        iter = iter->next;
     }
 
-    return iter->next == &llist->head ? NULL : iter->next;
+    return iter->next == &llist->head ? NULL : iter;
 }
 
 struct al_ll_iterator* al_ll_get_prev(struct al_linkedlist *llist, struct al_ll_iterator *iter) {
@@ -109,10 +109,12 @@ struct al_ll_iterator* al_ll_get_prev(struct al_linkedlist *llist, struct al_ll_
     }
 
     if (!iter) {
-        iter = &llist->head;
+        iter = llist->head.prev;
+    } else {
+        iter = iter->prev;
     }
 
-    return iter->prev == &llist->head ? NULL : iter->prev;
+    return iter == &llist->head ? NULL : iter;
 }
 
 #endif /* LINKEDLIST_C_ */

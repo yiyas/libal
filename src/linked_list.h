@@ -19,7 +19,7 @@ int al_ll_is_empty(const struct al_linkedlist *llist);
 
 int al_ll_insert_front(struct al_linkedlist *llist, al_ll_const_data_ptr element);
 int al_ll_insert_back(struct al_linkedlist *llist, al_ll_const_data_ptr element);
-int al_ll_remove(struct al_linkedlist *llist, struct al_ll_iterator *iter);
+void al_ll_remove(struct al_ll_iterator *iter);
 
 struct al_ll_iterator* al_ll_get_next(struct al_linkedlist *llist, struct al_ll_iterator *iter);
 struct al_ll_iterator* al_ll_get_prev(struct al_linkedlist *llist, struct al_ll_iterator *iter);
