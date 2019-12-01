@@ -5,7 +5,7 @@
 
 static const int ARR[] = { 1, 2, 3, 4, 5 };
 
-struct al_linked_list *llist = NULL;
+static struct al_linked_list *llist = NULL;
 
 void setUp(void) {
 	llist = al_ll_new(sizeof(ARR[0]));

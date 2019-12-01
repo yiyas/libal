@@ -1,6 +1,3 @@
-#ifndef LINKEDLIST_C_
-#define LINKEDLIST_C_
-
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
@@ -117,4 +114,3 @@ struct al_ll_iterator* al_ll_get_prev(struct al_linked_list *llist, struct al_ll
     return iter == &llist->head ? NULL : iter;
 }
 
-#endif /* LINKEDLIST_C_ */
