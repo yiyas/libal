@@ -87,6 +87,25 @@ void test_random_add_then_random_remove() {
     TEST_ASSERT_EQUAL_INT(5, *(int* )al_fa_get_data(array, 1));
     TEST_ASSERT_EQUAL_INT(4, *(int* )al_fa_get_data(array, 2));
     TEST_ASSERT_EQUAL_INT(1, *(int* )al_fa_get_data(array, 3));
+
+    al_fa_clear(array);
+    TEST_ASSERT_EQUAL_UINT32(0, al_fa_get_count(array));
+}
+
+void test_add_null_element_and_index_out_of_range() {
+    int rc;
+
+    rc = al_fa_add(array, 0, NULL);
+    TEST_ASSERT_EQUAL_INT(0, rc);
+
+    TEST_ASSERT_EQUAL_UINT32(1, al_fa_get_count(array));
+    TEST_ASSERT_EQUAL_INT(0, *(int* )al_fa_get_data(array, 0));
+
+    TEST_ASSERT_EQUAL_PTR(NULL, al_fa_get_data(array, 1));
+
+    TEST_ASSERT_EQUAL_INT(1, al_fa_remove(array, 1));
+
+    TEST_ASSERT_EQUAL_INT(1, al_fa_add(array, 2, NULL));
 }
 
 int main() {
@@ -94,5 +113,6 @@ int main() {
     RUN_TEST(test_add_as_last_then_remove_from_last);
     RUN_TEST(test_add_as_first_then_remove_from_first);
     RUN_TEST(test_random_add_then_random_remove);
+    RUN_TEST(test_add_null_element_and_index_out_of_range);
     return UNITY_END();
 }
