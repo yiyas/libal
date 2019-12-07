@@ -18,6 +18,8 @@ create_test(NAME test_linked_list SRCS ../src/linked_list.c)
 
 create_test(NAME test_flexible_array SRCS ../src/flexible_array.c)
 
+create_test(NAME test_hash_table SRCS ../src/hash_table.c)
+
 message("ALL TESTS: ${all_tests}")
 
 find_program(VALGRIND_FOUND valgrind)
