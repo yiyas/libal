@@ -50,7 +50,7 @@ void al_fa_clear(struct al_flexible_array *array) {
 
 inline static void move_element(struct al_flexible_array *array, uint32_t from, uint32_t to) {
     memmove(array->data + to * array->elem_size, array->data + from * array->elem_size,
-            (array->used_len - from) * array->elem_size);
+            (size_t) (array->used_len - from) * array->elem_size);
 }
 
 int al_fa_add(struct al_flexible_array *array, uint32_t index, al_fa_const_data_ptr element) {
@@ -67,7 +67,7 @@ int al_fa_add(struct al_flexible_array *array, uint32_t index, al_fa_const_data_
     }
 
     if (array->used_len == array->alloc_len) {
-        tmp = realloc(array->data, (array->alloc_len + array->inc_len) * array->elem_size);
+        tmp = realloc(array->data, (size_t) (array->alloc_len + array->inc_len) * array->elem_size);
         CHECK_NOMEM_RT(tmp, -1);
         array->data = tmp;
         array->alloc_len += array->inc_len;
