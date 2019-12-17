@@ -9,7 +9,7 @@ jobs:
     - name: check
       uses: actions/checkout@v1
     - name: valgrind-install
-      run: sudo apt-get install -y valgrind
+      run: sudo apt-get update --fix-missing; sudo apt-get install -y valgrind
     - name: build
       run: mkdir -p build && cd build && export CFLAGS="-coverage";cmake .. && make && make test
     - name: codecov
@@ -24,7 +24,7 @@ jobs:
     - name: check
       uses: actions/checkout@v1
     - name: valgrind-install
-      run: sudo apt-get install -y valgrind
+      run: sudo apt-get update --fix-missing; sudo apt-get install -y valgrind
     - name: build
       run: mkdir -p build && cd build && cmake -DCMAKE_BUILD_TYPE=release -DENABLE_TESTS=ON -DENABLE_VALGRIND_TESTS=ON .. && make && make test
 
