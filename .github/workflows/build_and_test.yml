@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   debug:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
     steps:
     - name: check
       uses: actions/checkout@v1
@@ -19,7 +19,7 @@ jobs:
         name: codecov
         yml: ./codecov.yml 
   release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
     steps:
     - name: check
       uses: actions/checkout@v1

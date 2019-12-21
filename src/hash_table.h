@@ -18,12 +18,15 @@ typedef uint32_t al_hash_iter;
 
 typedef uint32_t (*al_hash_calc_function)(al_hash_const_key_ptr key);
 typedef int (*al_hash_cmp_function)(al_hash_const_key_ptr key1, al_hash_const_key_ptr key2);
+typedef void (*al_hash_free)(al_hash_key_ptr key, al_hash_val_ptr val);
 
 struct al_hash_table* al_ht_new(uint32_t key_size, uint32_t val_size, al_hash_calc_function calc_func,
         al_hash_cmp_function eq_func, uint32_t init_capacity);
 void al_ht_destroy(struct al_hash_table *ht);
 void al_ht_clear(struct al_hash_table *ht);
 uint32_t al_ht_size(struct al_hash_table *ht);
+
+void al_ht_set_destructor(struct al_hash_table *ht, al_hash_free destructor);
 
 //void al_ht_set_up_factor(struct al_hash_table *ht, uint8_t factor);
 //void al_ht_set_down_factor(struct al_hash_table *ht, uint8_t factor);
@@ -41,7 +44,7 @@ al_hash_key_ptr al_ht_iterkey(struct al_hash_table *ht, al_hash_iter iter);
 al_hash_val_ptr al_ht_iterval(struct al_hash_table *ht, al_hash_iter iter);
 int al_ht_iterremove(struct al_hash_table *ht, al_hash_iter iter);
 
-struct al_hash_table* al_ht_str_new(uint32_t val_size, uint32_t init_capacity);
+struct al_hash_table* al_ht_str_new(uint32_t val_size, uint32_t init_capacity, int ds);
 
 #ifdef __cplusplus
 }

@@ -22,17 +22,18 @@ struct al_hash_table {
     al_hash_calc_function hash_func;
     al_hash_cmp_function cmp_func;
     uint8_t up_factor;
-    uint8_t padding[2];
+    uint8_t padding[3];
     uint32_t init_capacity;
     uint32_t capacity;
     uint32_t count;
+    al_hash_free destructor;
 
     struct hash_node *data;
 };
 
 #define NEXT_POS(ht, i)   ((i + 1) % ht->capacity)
 #define NODE_LEN(ht)      (sizeof(struct hash_node) + ht->key_size + ht->val_size)
-#define NODE_PTR(ht, i)    ((struct hash_node*)((char*)ht->data + i * NODE_LEN(ht)))
+#define NODE_PTR(ht, i)   ((struct hash_node*)((char*)ht->data + i * NODE_LEN(ht)))
 #define KEY_PTR(ht, i)    ((al_hash_key_ptr)((char*)ht->data + i * NODE_LEN(ht) + sizeof(struct hash_node)))
 #define VAL_PTR(ht, i)    ((al_hash_val_ptr)((char*)ht->data + i * NODE_LEN(ht) + sizeof(struct hash_node) + ht->key_size))
 
@@ -63,13 +64,18 @@ struct al_hash_table* al_ht_new(uint32_t key_size, uint32_t val_size, al_hash_ca
     return ht;
 }
 
-void al_ht_destroy(struct al_hash_table *ht) {
+inline static void destroy_by_pos(struct al_hash_table *ht, uint32_t pos) {
+    if(ht->destructor) {
+        ht->destructor(KEY_PTR(ht, pos), VAL_PTR(ht, pos));
+    }
+}
+
+void al_ht_set_destructor(struct al_hash_table *ht, al_hash_free destructor) {
     if(!ht) {
         return;
     }
 
-    free(ht->data);
-    free(ht);
+    ht->destructor = destructor;
 }
 
 void al_ht_clear(struct al_hash_table *ht) {
@@ -80,9 +86,23 @@ void al_ht_clear(struct al_hash_table *ht) {
     }
 
     for (i = 0; i < ht->capacity; i++) {
-        NODE_PTR(ht, i)->hit = 0;
+        if(NODE_PTR(ht, i)->hit) {
+            destroy_by_pos(ht, i);
+            NODE_PTR(ht, i)->hit = 0;
+        }
     }
     ht->count = 0;
+}
+
+void al_ht_destroy(struct al_hash_table *ht) {
+    if(!ht) {
+        return;
+    }
+
+    al_ht_clear(ht);
+
+    free(ht->data);
+    free(ht);
 }
 
 uint32_t al_ht_size(struct al_hash_table *ht) {
@@ -251,15 +271,17 @@ static int remove_by_pos(struct al_hash_table *ht, al_hash_iter pos, uint32_t pr
         pos = next_collision_pos(ht, pos, primary_pos);
         CHECK_INTERR_RT(pos == AL_HT_ITER_INVALID, -1);
 
+        destroy_by_pos(ht, primary_pos);
+
         // move next to primary pos
-        NODE_PTR(ht, primary_pos)->hit--;
         NODE_PTR(ht, primary_pos)->hash_code = NODE_PTR(ht, pos)->hash_code;
         memcpy(NODE_PTR(ht, primary_pos)->data, NODE_PTR(ht, pos)->data, ht->key_size + ht->val_size);
-        memset(NODE_PTR(ht, pos), 0, NODE_LEN(ht));
     } else {
-        NODE_PTR(ht, pos)->hit = 0;
+        destroy_by_pos(ht, pos);
     }
 
+    NODE_PTR(ht, primary_pos)->hit--;
+    NODE_PTR(ht, pos)->hit = 0;
     ht->count--;
 
     return 0;
@@ -323,9 +345,21 @@ static int str_cmp(al_hash_const_key_ptr key1, al_hash_const_key_ptr key2) {
     return strcmp(*(const char**) key1, *(const char**) key2);
 }
 
-struct al_hash_table* al_ht_str_new(uint32_t val_size, uint32_t init_capacity)
+static void free_dynamic_str(al_hash_key_ptr key, al_hash_val_ptr val) {
+    (void) val;
+    free(*(char**) key);
+}
+
+struct al_hash_table* al_ht_str_new(uint32_t val_size, uint32_t init_capacity, int ds)
 {
-    return al_ht_new(sizeof(const char*), val_size, str_hash, str_cmp, init_capacity);
+    struct al_hash_table *ht;
+
+    ht = al_ht_new(sizeof(const char*), val_size, str_hash, str_cmp, init_capacity);
+    if(ht && ds) {
+        al_ht_set_destructor(ht, free_dynamic_str);
+    }
+
+    return ht;
 }
 
 

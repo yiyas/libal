@@ -8,6 +8,7 @@
  *     https://opensource.org/licenses/BSD-3-Clause
  */
 #include <stddef.h>
+#include <string.h>
 
 #include "../src/dict.h"
 #include "unity/unity.h"
@@ -20,8 +21,8 @@ void tearDown(void) {
     al_dict_destroy();
 }
 
-void test_dict_add_remove(){
-    const char *str1, *str2, *str3;
+void test_dict_add_remove() {
+    const char *str1, *str2, *str3, *str4, *str5;
 
     str1 = al_dict_add("abc");
     TEST_ASSERT_EQUAL_STRING("abc", str1);
@@ -30,12 +31,21 @@ void test_dict_add_remove(){
 
     str3 = al_dict_add("abc");
     TEST_ASSERT_EQUAL_STRING("abc", str3);
-
     TEST_ASSERT_EQUAL_PTR(str1, str3);
+
+    str4 = al_dict_add_n("abcd", 3);
+    TEST_ASSERT_EQUAL_STRING("abc", str4);
+    TEST_ASSERT_EQUAL_PTR(str1, str4);
+
+    str5 = al_dict_add_ds(strdup("abc"));
+    TEST_ASSERT_EQUAL_STRING("abc", str5);
+    TEST_ASSERT_EQUAL_PTR(str1, str5);
 
     al_dict_remove(str1);
     al_dict_remove(str2);
     al_dict_remove(str3);
+    al_dict_remove(str4);
+    al_dict_remove(str5);
 }
 
 int main() {
