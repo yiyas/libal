@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(al)
+project(al C)
 
 set(AL_MAJOR_VERSION 0)
 set(AL_MINOR_VERSION 0)
@@ -16,11 +16,6 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_FLAGS           "${CMAKE_C_FLAGS} -Wall -Wextra")
 set(CMAKE_C_FLAGS_RELEASE   "-O2")
 set(CMAKE_C_FLAGS_DEBUG     "-g -O0")
-
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_FLAGS           "${CMAKE_CXX_FLAGS} -Wall -Wextra")
-set(CMAKE_CXX_FLAGS_RELEASE   "-O2")
-set(CMAKE_CXX_FLAGS_DEBUG     "-g -O0")
 
 file(GLOB al_srcs src/*.c)
 

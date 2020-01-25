@@ -11,9 +11,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "al_pub.h"
 #include "hash_table.h"
 #include "dict.h"
+#include "pub.h"
 
 static struct al_hash_table *dict_table = NULL;
 

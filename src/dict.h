@@ -7,8 +7,8 @@
  *
  *     https://opensource.org/licenses/BSD-3-Clause
  */
-#ifndef DICT_H_
-#define DICT_H_
+#ifndef AL_DICT_H_
+#define AL_DICT_H_
 
 #include <stdint.h>
 
@@ -29,4 +29,4 @@ void al_dict_remove(const char *str);
 }
 #endif
 
-#endif /* DICT_H_ */
+#endif /* AL_DICT_H_ */

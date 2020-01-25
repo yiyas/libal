@@ -12,7 +12,8 @@
 #include <string.h>
 
 #include "linked_list.h"
-#include "al_pub.h"
+
+#include "pub.h"
 
 struct al_ll_iterator {
 	struct al_ll_iterator *prev;
@@ -22,16 +23,14 @@ struct al_ll_iterator {
 
 struct al_linked_list {
 	struct al_ll_iterator head;
-	uint32_t elem_size;
 };
 
-struct al_linked_list* al_ll_new(uint32_t elem_size) {
+struct al_linked_list* al_ll_new() {
     struct al_linked_list *llist;
 
     llist = calloc(1, sizeof(*llist));
     CHECK_NOMEM_RT(llist, NULL);
 
-    llist->elem_size = elem_size;
     llist->head.next = &llist->head;
     llist->head.prev = &llist->head;
 
@@ -57,14 +56,14 @@ int al_ll_is_empty(const struct al_linked_list *llist) {
 	return !llist || llist->head.next == llist->head.prev;
 }
 
-static int insert_after(struct al_linked_list *llist, struct al_ll_iterator *iter, al_ll_const_data_ptr element) {
+static int insert_after(struct al_ll_iterator *iter, al_ll_const_data_ptr element, uint32_t elem_size) {
     struct al_ll_iterator *tmp;
 
-    tmp = calloc(1, sizeof(*tmp) + llist->elem_size);
+    tmp = calloc(1, sizeof(*tmp) + elem_size);
     CHECK_NOMEM_RT(tmp, -1);
 
     if(element) {
-        memcpy(tmp->data, element, llist->elem_size);
+        memcpy(tmp->data, element, elem_size);
     }
 
     tmp->next = iter->next;
@@ -76,14 +75,14 @@ static int insert_after(struct al_linked_list *llist, struct al_ll_iterator *ite
     return 0;
 }
 
-int al_ll_insert_front(struct al_linked_list *llist, al_ll_const_data_ptr element) {
+int al_ll_insert_front(struct al_linked_list *llist, al_ll_const_data_ptr element, uint32_t elem_size) {
     CHECK_NULLARG_RT(llist, -1);
-    return insert_after(llist, &llist->head, element);
+    return insert_after(&llist->head, element, elem_size);
 }
 
-int al_ll_insert_back(struct al_linked_list *llist, al_ll_const_data_ptr element) {
+int al_ll_insert_back(struct al_linked_list *llist, al_ll_const_data_ptr element, uint32_t elem_size) {
     CHECK_NULLARG_RT(llist, -1);
-    return insert_after(llist, llist->head.prev, element);
+    return insert_after(llist->head.prev, element, elem_size);
 }
 
 void al_ll_remove(struct al_ll_iterator *iter) {

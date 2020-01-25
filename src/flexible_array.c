@@ -12,7 +12,8 @@
 #include <string.h>
 
 #include "flexible_array.h"
-#include "al_pub.h"
+
+#include "pub.h"
 
 struct al_flexible_array {
     uint32_t elem_size;

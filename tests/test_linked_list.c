@@ -17,7 +17,7 @@ static const int ARR[] = { 1, 2, 3, 4, 5 };
 static struct al_linked_list *llist = NULL;
 
 void setUp(void) {
-	llist = al_ll_new(sizeof(ARR[0]));
+	llist = al_ll_new();
 }
 
 void tearDown(void) {
@@ -28,7 +28,7 @@ static void build_list_with_inert_back() {
     int i;
 
     for (i = 0; i < (int) (sizeof(ARR) / sizeof(ARR[0])); i++) {
-        al_ll_insert_back(llist, &ARR[i]);
+        al_ll_insert_int_back(llist, ARR[i]);
     }
 }
 
@@ -36,20 +36,18 @@ static void build_list_with_inert_front() {
     int i;
 
     for (i = 4; i >= 0; i--) {
-        al_ll_insert_front(llist, &ARR[i]);
+        al_ll_insert_int_front(llist, ARR[i]);
     }
 }
 
 static void iter_list_with_for() {
     int i;
     struct al_ll_iterator *iter;
-    int *ptr;
 
     i = 1;
     AL_LL_FOR(llist, iter)
     {
-        ptr = al_ll_get_data(iter);
-        TEST_ASSERT_EQUAL_INT(i, *(int* )ptr);
+        TEST_ASSERT_EQUAL_INT(i, *al_ll_get_data(iter, int));
         i++;
     }
 }
@@ -57,13 +55,11 @@ static void iter_list_with_for() {
 static void iter_list_with_inv_for() {
     int i;
     struct al_ll_iterator *iter;
-    int *ptr;
 
     i = 5;
     AL_LL_INV_FOR(llist, iter)
     {
-        ptr = al_ll_get_data(iter);
-        TEST_ASSERT_EQUAL_INT(i, *(int* )ptr);
+        TEST_ASSERT_EQUAL_INT(i, *al_ll_get_data(iter, int));
         i--;
     }
 }
@@ -71,13 +67,11 @@ static void iter_list_with_inv_for() {
 static void iter_list_with_for_safe_then_remove() {
     int i;
     struct al_ll_iterator *iter, *next;
-    int *ptr;
 
     i = 1;
     AL_LL_FOR_SAFE(llist, iter, next)
     {
-        ptr = al_ll_get_data(iter);
-        TEST_ASSERT_EQUAL_INT(i, *(int* )ptr);
+        TEST_ASSERT_EQUAL_INT(i, *al_ll_get_data(iter, int));
         i++;
         al_ll_remove(iter);
     }
@@ -88,21 +82,17 @@ static void iter_list_with_for_safe_then_remove() {
 static void iter_list_with_inv_for_safe_then_remove() {
     int i;
     struct al_ll_iterator *iter, *next;
-    int *ptr;
 
     i = 5;
     AL_LL_INV_FOR_SAFE(llist, iter, next)
     {
-        ptr = al_ll_get_data(iter);
-        TEST_ASSERT_EQUAL_INT(i, *(int* )ptr);
+        TEST_ASSERT_EQUAL_INT(i, *al_ll_get_data(iter, int));
         i--;
         al_ll_remove(iter);
     }
 
     TEST_ASSERT_TRUE(al_ll_is_empty(llist));
 }
-
-typedef void (*FUNCTION)();
 
 static void test11() {
     build_list_with_inert_back();

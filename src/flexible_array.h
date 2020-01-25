@@ -7,8 +7,8 @@
  *
  *     https://opensource.org/licenses/BSD-3-Clause
  */
-#ifndef FLEXIBLE_ARRAY_H_
-#define FLEXIBLE_ARRAY_H_
+#ifndef AL_FLEXIBLE_ARRAY_H_
+#define AL_FLEXIBLE_ARRAY_H_
 
 #include <stdint.h>
 
@@ -36,4 +36,4 @@ al_fa_data_ptr al_fa_get_data(struct al_flexible_array *array, uint32_t index);
 }
 #endif
 
-#endif /* FLEXIBLE_ARRAY_H_ */
+#endif /* AL_FLEXIBLE_ARRAY_H_ */

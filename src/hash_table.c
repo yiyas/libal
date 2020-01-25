@@ -12,7 +12,8 @@
 #include <string.h>
 
 #include "hash_table.h"
-#include "al_pub.h"
+
+#include "pub.h"
 
 #define DEFAULT_UP_FACTOR       ((uint8_t)75)
 #define DEFAULT_INIT_CAPACITY   ((uint32_t)8)
