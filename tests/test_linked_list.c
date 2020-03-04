@@ -7,9 +7,9 @@
  *
  *     https://opensource.org/licenses/BSD-3-Clause
  */
+#include <libal/linked_list.h>
 #include <stddef.h>
 
-#include "../src/linked_list.h"
 #include "unity/unity.h"
 
 static const int ARR[] = { 1, 2, 3, 4, 5 };

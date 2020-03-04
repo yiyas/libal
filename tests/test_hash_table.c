@@ -7,11 +7,11 @@
  *
  *     https://opensource.org/licenses/BSD-3-Clause
  */
+#include <libal/hash_table.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "../src/hash_table.h"
 #include "unity/unity.h"
 
 static const char *STRS[] = { "aa", "bb", "cc", "c1234", "y12", "x1", "112233" };

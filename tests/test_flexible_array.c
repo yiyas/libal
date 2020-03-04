@@ -7,9 +7,9 @@
  *
  *     https://opensource.org/licenses/BSD-3-Clause
  */
+#include <libal/flexible_array.h>
 #include <stddef.h>
 
-#include "../src/flexible_array.h"
 #include "unity/unity.h"
 
 static const int ARR[] = { 1, 2, 3, 4, 5, 6 };

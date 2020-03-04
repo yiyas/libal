@@ -7,13 +7,12 @@
  *
  *     https://opensource.org/licenses/BSD-3-Clause
  */
+#include <libal/linked_list.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "linked_list.h"
-
-#include "pub.h"
+#include <libal/pub.h>
 
 struct al_ll_iterator {
 	struct al_ll_iterator *prev;

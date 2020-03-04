@@ -7,13 +7,12 @@
  *
  *     https://opensource.org/licenses/BSD-3-Clause
  */
+#include <libal/hash_table.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "hash_table.h"
-
-#include "pub.h"
+#include <libal/pub.h>
 
 #define DEFAULT_UP_FACTOR       ((uint8_t)75)
 #define DEFAULT_INIT_CAPACITY   ((uint32_t)8)

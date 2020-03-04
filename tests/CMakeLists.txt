@@ -22,6 +22,8 @@ create_test(NAME test_hash_table SRCS ../src/hash_table.c)
 
 create_test(NAME test_dict SRCS ../src/dict.c ../src/hash_table.c)
 
+create_test(NAME test_tree SRCS ../src/tree.c)
+
 message("ALL TESTS: ${all_tests}")
 
 find_program(VALGRIND_FOUND valgrind)

@@ -7,13 +7,13 @@
  *
  *     https://opensource.org/licenses/BSD-3-Clause
  */
+#include <libal/dict.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "hash_table.h"
-#include "dict.h"
-#include "pub.h"
+#include <libal/hash_table.h>
+#include <libal/pub.h>
 
 static struct al_hash_table *dict_table = NULL;
 

@@ -7,13 +7,12 @@
  *
  *     https://opensource.org/licenses/BSD-3-Clause
  */
+#include <libal/flexible_array.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "flexible_array.h"
-
-#include "pub.h"
+#include <libal/pub.h>
 
 struct al_flexible_array {
     uint32_t elem_size;

@@ -7,10 +7,10 @@
  *
  *     https://opensource.org/licenses/BSD-3-Clause
  */
+#include <libal/dict.h>
 #include <stddef.h>
 #include <string.h>
 
-#include "../src/dict.h"
 #include "unity/unity.h"
 
 void setUp(void) {
