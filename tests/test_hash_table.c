@@ -15,7 +15,7 @@
 #include "unity/unity.h"
 
 static const char *STRS[] = { "aa", "bb", "cc", "c1234", "y12", "x1", "112233" };
-static const int INTS[] = { 1, 2, 3, 4, 5, 6, 7 };
+static const size_t INTS[] = { 1, 2, 3, 4, 5, 6, 7 };
 
 static struct al_hash_table *ht = NULL;
 
