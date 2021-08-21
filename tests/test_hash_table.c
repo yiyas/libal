@@ -151,26 +151,16 @@ void test_ht_iter_remove() {
     TEST_ASSERT_EQUAL_INT(1, al_ht_iterremove(ht, AL_HT_ITER_INVALID));
 }
 
-static void free_dynamic_str(al_hash_key_ptr key, al_hash_val_ptr val) {
-    if (key) {
-        printf("free key: %s\n", *(char**) key);
-        free(*(char**) key);
-    }
-    if (val) {
-        printf("free key: %s\n", *(char**) val);
-        free(*(char**) val);
-    }
-}
-
-void test_ht_destructor() {
+void test_ht_with_dynamic_str_key() {
     char *k1, *k2, *v1, *v2;
+    struct al_hash_table *ht;
 
     k1 = strdup("key1");
     k2 = strdup("key2");
-    v1 = strdup("value1");
-    v2 = strdup("value2");
+    v1 = "value1";
+    v2 = "value2";
 
-    al_ht_set_destructor(ht, free_dynamic_str);
+    ht = al_ht_str_new(sizeof(const char*), 0, 1);
 
     TEST_ASSERT_EQUAL_INT(0, al_ht_put(ht, &k1, &v1, NULL));
     TEST_ASSERT_EQUAL_INT(0, al_ht_put(ht, &k2, &v2, NULL));
@@ -178,6 +168,29 @@ void test_ht_destructor() {
 
     TEST_ASSERT_EQUAL_INT(0, al_ht_remove(ht, &k1));
     TEST_ASSERT_EQUAL_UINT32(1, al_ht_size(ht));
+
+    al_ht_destroy(ht);
+}
+
+void test_ht_with_const_ptr_key() {
+    char *k1, *k2, *v1, *v2;
+    struct al_hash_table *ht;
+
+    k1 = "key1";
+    k2 = "key2";
+    v1 = "value1";
+    v2 = "value2";
+
+    ht = al_ht_ptr_new(sizeof(const char*), 0);
+
+    TEST_ASSERT_EQUAL_INT(0, al_ht_put(ht, &k1, &v1, NULL));
+    TEST_ASSERT_EQUAL_INT(0, al_ht_put(ht, &k2, &v2, NULL));
+    TEST_ASSERT_EQUAL_UINT32(2, al_ht_size(ht));
+
+    TEST_ASSERT_EQUAL_INT(0, al_ht_remove(ht, &k1));
+    TEST_ASSERT_EQUAL_UINT32(1, al_ht_size(ht));
+
+    al_ht_destroy(ht);
 }
 
 int main() {
@@ -187,6 +200,7 @@ int main() {
     RUN_TEST(test_ht_put_same_key);
     RUN_TEST(test_ht_put_null_key);
     RUN_TEST(test_ht_iter_remove);
-    RUN_TEST(test_ht_destructor);
+    RUN_TEST(test_ht_with_dynamic_str_key);
+    RUN_TEST(test_ht_with_const_ptr_key);
     return UNITY_END();
 }
